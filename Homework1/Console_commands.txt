@@ -1,0 +1,8 @@
+-- Команда создания дампа
+mysqldump example > example_dmp.sql
+
+-- Команда импорта данных дампа
+mysql sample < example_dmp.sql
+
+-- Создание дампа на 100 строк таблицы help_keyword базы данных mysql 
+mysqldump --where="true limit 100" mysql help_keyword > dump2.sql
