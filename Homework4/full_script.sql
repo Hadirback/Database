@@ -31,7 +31,6 @@ ALTER TABLE users
 SELECT * 
 FROM storehouses_product 
 ORDER BY IF(value = 0, 1, 0), value;
- 
 
 /*
  * 4. Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. 
@@ -74,14 +73,33 @@ FROM users;
  * 2. Подсчитайте количество дней рождения, которые приходятся на каждый из дней недели. 
  * Следует учесть, что необходимы дни недели текущего года, а не года рождения.
  * */
--- SELECT CONCAT(YEAR(NOW()), MONTH(birthday_at), DAY(birthday_at))  FROM users
--- SELECT DATE_FORMAT(YEAR(NOW()), '%W')
--- FROM users 
 
+SELECT 
+	COUNT(*) AS count_of_day
+	, tab.day_of_week 
+FROM 
+(
+	SELECT 
+		DATE_FORMAT(CONCAT(YEAR(NOW()), DATE_FORMAT(birthday_at, '-%m-%d')), '%W') AS day_of_week
+	FROM users
+) tab
+GROUP BY tab.day_of_week;
 
 /*
  * 3. Подсчитайте произведение чисел в столбце таблицы
  * */
+
+DROP TEMPORARY TABLE IF EXISTS tmp_tab;
+CREATE TEMPORARY TABLE tmp_tab (
+	value INT NOT NULL
+);
+
+INSERT INTO tmp_tab VALUES (1), (2), (3), (4), (5);
+
+SELECT EXP(SUM(LOG(value))) FROM tmp_tab;
+
+
+
 
 
 
