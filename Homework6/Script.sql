@@ -3,7 +3,9 @@
     хотя бы один заказ orders в интернет магазине.
 */
 
-SELECT u.id, u.name
+SELECT 
+	u.id
+	, u.name
 FROM users u
 JOIN orders o
 	ON o.user_id = u.id;
@@ -25,7 +27,11 @@ LEFT JOIN catalogs c
     поле name — русское. Выведите список рейсов flights с русскими названиями городов.
 */
 
-SELECT f.id, c1.name, c2.name FROM flights f
+SELECT 
+	f.id
+	, c1.name AS from
+	, c2.name AS to
+FROM flights f
 LEFT JOIN cities c1
 	ON c1.label = f.from
 LEFT JOIN cities c2
